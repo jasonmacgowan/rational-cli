@@ -1,8 +1,26 @@
-const scm = require("scm");
+const os = require("os");
+const scm = require("./scm");
+
+function showHelp() {
+  const commands = Object.keys(scm);
+
+  process.stdout.write("Usage: node index.js <command>\n\n");
+  process.stdout.write("available commands are:\n");
+  process.stdout.write(commands.map((command) => `\t${command}`).join(os.EOL));
+  process.stdout.write(os.EOL);
+}
 
 async function main() {
-  await scm.login();
-  await scm.logout();
+  const command = process.argv[2];
+
+  if (Object.prototype.hasOwnProperty.call(scm)) {
+    if (typeof scm[command] === "function") {
+      scm[command]();
+      return;
+    }
+  }
+
+  showHelp();
 }
 
 // $ node index.js

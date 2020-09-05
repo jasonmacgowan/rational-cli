@@ -1,7 +1,7 @@
 const debug = require("debug")("RATIONAL.SCM");
 const execa = require("execa");
 
-require("dotenv")();
+require("dotenv").config();
 
 const exe = process.env.RATIONAL_SCM;
 
