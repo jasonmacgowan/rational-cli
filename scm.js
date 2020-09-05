@@ -21,25 +21,38 @@ const password = ["--password", process.env.RATIONAL_PASSWORD];
  * @param  {...any} args
  */
 exports.run = function run(...args) {
-  debug(`running: ${exe} ${args.map((x) => `"${x}"`)}`);
+  debug(
+    `running: ${exe} ${args
+      .filter((x) => typeof x === "string" && x.length)
+      .map((x) => `"${x}"`)
+      .join(" ")}`
+  );
 
-  return execa(exe, args);
+  const { stdout, stderr } = execa(
+    exe,
+    args.filter((x) => typeof x === "string" && x.length)
+  );
+  stdout.pipe(process.stdout);
+  stderr.pipe(process.stderr);
 };
 
 /**
  * Login to a Rational Team Concert repository
  */
-exports.login = async function login() {
-  const { stdout } = await exports.run("login", ...repository, ...username, ...password);
-
-  return stdout;
+exports.login = function login() {
+  return exports.run("login", ...repository, ...username, ...password);
 };
 
 /**
  * Logout of a Rational Team Concert repository
  */
-exports.logout = async function logout() {
-  const { stdout } = await exports.run("logout", ...repository, ...username);
+exports.logout = function logout() {
+  return exports.run("logout", ...repository);
+};
 
-  return stdout;
+/**
+ * List streams for a Rational Team Concert repository
+ */
+exports.listStreams = function listStreams(...args) {
+  return exports.run("list", "stream", ...repository, ...username, ...args);
 };

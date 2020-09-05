@@ -13,9 +13,9 @@ function showHelp() {
 async function main() {
   const command = process.argv[2];
 
-  if (Object.prototype.hasOwnProperty.call(scm)) {
+  if (Object.prototype.hasOwnProperty.call(scm, command)) {
     if (typeof scm[command] === "function") {
-      scm[command]();
+      scm[command](...process.argv.slice(3));
       return;
     }
   }
