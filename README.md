@@ -29,3 +29,16 @@ RATIONAL_REPOSITORY=https://<fqdn>:9443/ccm/
 RATIONAL_USERNAME=<username>
 RATIONAL_PASSWORD=<password>
 ```
+
+## Running commands
+
+```
+$ node index.js
+Usage: node index.js <command> [args]
+
+available commands are:
+    run
+    login
+    logout
+    listStreams
+```

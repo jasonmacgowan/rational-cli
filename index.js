@@ -4,7 +4,7 @@ const scm = require("./scm");
 function showHelp() {
   const commands = Object.keys(scm);
 
-  process.stdout.write("Usage: node index.js <command>\n\n");
+  process.stdout.write("Usage: node index.js <command> [args]\n\n");
   process.stdout.write("available commands are:\n");
   process.stdout.write(commands.map((command) => `\t${command}`).join(os.EOL));
   process.stdout.write(os.EOL);
